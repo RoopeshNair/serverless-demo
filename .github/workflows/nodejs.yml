@@ -29,9 +29,11 @@ jobs:
     - name: 'Run npm'
       shell: bash
       run: |
+        pushd ./start
         npm install
         npm run build --if-present
         npm run test --if-present
+        popd
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@master
       id: fa
@@ -39,7 +41,7 @@ jobs:
         app-name: stockquoter
         # If your function app project is not located in your repository's root
         # Please consider prefixing the project path in this package parameter
-        package: '.'
+        package: './start'
     #- name: 'use the published functionapp url in upcoming steps'
     #  run: |
     #    echo "${{ steps.fa.outputs.app-url }}"
